@@ -8,6 +8,7 @@ import Image from "../database/models/image.model";
 import { redirect } from "next/navigation";
 
 import { v2 as cloudinary } from 'cloudinary'
+import { AddImageParams, UpdateImageParams } from "@/types";
 
 const populateUser = (query: any) => query.populate({
   path: 'author',
