@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 
+import { Shippo } from "shippo";
+
 // ====== USER PARAMS
 declare type CreateUserParams = {
   clerkId: string;
@@ -136,3 +138,34 @@ declare type TransformedImageProps = {
   hasDownload?: boolean;
   setIsTransforming?: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
+declare interface HeaderBoxProps {
+  type?: "title" | "greeting";
+  title: string;
+  subtext: string;
+  user?: string;
+}
+
+declare type OnlineOrders = {
+  objectId: Shippo.Order.objectId;
+  orderNumber: Shippo.Order.orderNumber;
+  customerName: Shippo.Order.customerName;
+  orderStatus: Shippo.Order.orderStatus;
+  totalPrice: Shippo.Order.totalPrice;
+  placedAt: Shippo.Order.placedAt;
+  fromAddress: Shippo.Order.fromAddress;
+  toAddress: Shippo.Order.toAddress;
+  lineItems: Shippo.Order.lineItems;
+};
+
+declare interface TransactionTableProps {
+  onlineOrders: onlineOrders[];
+}
+
+declare interface LineItemsTableProps {
+  lineItems: Shippo.Order.lineItems;
+}
+
+declare interface CategoryBadgeProps {
+  category: Shippo.Order.orderStatus;
+}

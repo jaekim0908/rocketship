@@ -76,7 +76,7 @@
 }
 
 .auth {
-  @apply flex-center min-h-screen w-full bg-purple-100
+  @apply flex-center min-h-screen w-full bg-purple-100;
 }
 
 .root {
@@ -84,12 +84,52 @@
 }
 
 .root-container {
-  @apply mt-16 flex-1 overflow-auto py-8 lg:mt-0 lg:max-h-screen lg:py-10
+  @apply mt-16 flex-1 overflow-auto py-8 lg:mt-0 lg:max-h-screen lg:py-10;
 }
 
 /* ========================================== TAILWIND STYLES */
 @layer utilities {
   /* ===== UTILITIES */
+  .text-10 {
+    @apply text-[10px] leading-[14px];
+  }
+
+  .text-12 {
+    @apply text-[12px] leading-[16px];
+  }
+
+  .text-14 {
+    @apply text-[14px] leading-[20px];
+  }
+
+  .text-16 {
+    @apply text-[16px] leading-[24px];
+  }
+
+  .text-18 {
+    @apply text-[18px] leading-[22px];
+  }
+
+  .text-20 {
+    @apply text-[20px] leading-[24px];
+  }
+
+  .text-24 {
+    @apply text-[24px] leading-[30px];
+  }
+
+  .text-26 {
+    @apply text-[26px] leading-[32px];
+  }
+
+  .text-30 {
+    @apply text-[30px] leading-[38px];
+  }
+
+  .text-36 {
+    @apply text-[36px] leading-[44px];
+  }
+
   .wrapper {
     @apply max-w-5xl mx-auto px-5 md:px-10 w-full text-dark-400 p-16-regular;
   }
@@ -373,4 +413,40 @@
   font-size: 16px;
   font-weight: 600;
   color: #384262;
+}
+
+.online-orders {
+  @apply flex max-h-screen w-full flex-col gap-8 overflow-y-scroll bg-gray-25 p-8 xl:py-12;
+}
+
+.online-orders-header {
+  @apply flex w-full flex-col items-start justify-between gap-8 md:flex-row;
+}
+
+.transactions-account {
+  @apply flex flex-col justify-between gap-4 rounded-lg border-y bg-blue-600 px-4 py-5 md:flex-row;
+}
+
+.header-box {
+  @apply flex flex-col gap-1;
+}
+
+.header-box-title {
+  @apply text-24 lg:text-30 font-semibold text-gray-900;
+}
+
+.header-box-subtext {
+  @apply text-14 lg:text-16 font-normal text-gray-600;
+}
+
+.rotateimg90 {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.rotate90 {
+  transform: rotate(90deg);
 }

@@ -36,6 +36,15 @@ module.exports = {
           600: "#2B3674",
           700: "#384262",
         },
+        gray: {
+          25: "#FCFCFD",
+          200: "#EAECF0",
+          300: "#D0D5DD",
+          500: "#667085",
+          600: "#475467",
+          700: "#344054",
+          900: "#101828",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
