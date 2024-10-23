@@ -12,7 +12,7 @@ export const getOrders = async () => {
   try {
     while (hasMore) {
       const response = await shippoClient.orders.list({
-        // orderStatus: ["PAID"],
+        orderStatus: ["PAID"],
         shopApp: "Shopify",
         results: 100,
         page: currentPage,

@@ -7,7 +7,9 @@ import { z } from "zod";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -52,6 +54,9 @@ export const formSchema = z.object({
   width: z.coerce.number().min(0.1),
   height: z.coerce.number().min(0.1),
   weight: z.coerce.number().min(0.1),
+  serviceCode: z.string({
+    required_error: "Please select a service for your package.",
+  }),
 });
 
 const CreatePackageForm = ({ currentOrder }: { currentOrder: Order }) => {
@@ -60,6 +65,8 @@ const CreatePackageForm = ({ currentOrder }: { currentOrder: Order }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [rateData, setRateData] = useState(null);
   const [labelData, setLabelData] = useState(null);
+  const [chargeData, setChargeData] = useState(null);
+  const [negotiatdChargeData, setNegotiatedChargeData] = useState(null);
   const router = useRouter();
 
   const initialValues = {
@@ -67,6 +74,7 @@ const CreatePackageForm = ({ currentOrder }: { currentOrder: Order }) => {
     width: 1,
     height: 1,
     weight: 1,
+    serviceCode: "03"
   };
 
   // 1. Define your form.
@@ -90,20 +98,67 @@ const CreatePackageForm = ({ currentOrder }: { currentOrder: Order }) => {
       values
     );
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      // setRateData(quotationResult.RateResponse.RatedShipment);
-      setLabelData(
-        JSON.parse(JSON.stringify(createShipment)).ShipmentResponse
-          .ShipmentResults.PackageResults[0].ShippingLabel.GraphicImage
-      );
+    setIsSubmitting(false);
+    // setRateData(quotationResult.RateResponse.RatedShipment);
+    setLabelData(
+      JSON.parse(JSON.stringify(createShipment)).ShipmentResponse
+        .ShipmentResults.PackageResults[0].ShippingLabel.GraphicImage
+    );
+    setChargeData(
+      JSON.parse(JSON.stringify(createShipment)).ShipmentResponse
+        .ShipmentResults.ShipmentCharges
+    );
+    setNegotiatedChargeData(
+      JSON.parse(JSON.stringify(createShipment)).ShipmentResponse
+      .ShipmentResults.NegotiatedRateCharges
+    )
+    setTimeout( () => {
       console.log(JSON.stringify(createShipment, null, 2));
-    }, 500);
+    }, 100)
   }
   return (
     <>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <div></div>
+          <Header title="UPS Service" />
+          <FormField
+            control={form.control}
+            name="serviceCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>UPS Service</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger className="w-[250px]">
+                      <SelectValue placeholder="Select a service for your package" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Domestic Service</SelectLabel>
+                      <SelectItem value="03">UPS Ground</SelectItem>
+                      <SelectItem value="01">UPS Next Day Air</SelectItem>
+                      <SelectItem value="02">UPS 2nd Day Air</SelectItem>
+                      <SelectItem value="12">UPS 3 Day Select</SelectItem>
+                      <SelectItem value="13">UPS Next Day Air Saver</SelectItem>
+                      <SelectItem value="14">UPS Next Day Air Early</SelectItem>
+                      <SelectItem value="59">UPS 2nd Day Air AM</SelectItem>
+                      <SelectItem value="21">UPS Express Critical</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                {/* <FormDescription>
+                You can manage email addresses in your{" "}
+                <Link href="/examples/forms">email settings</Link>.
+              </FormDescription> */}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Header title="Package Dimension" />
           <div className="grid grid-cols-3 gap-4">
             <CustomField2
@@ -148,7 +203,7 @@ const CreatePackageForm = ({ currentOrder }: { currentOrder: Order }) => {
               className="submit-button capitalize"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Submitting..." : "Submit Quote"}
+              {isSubmitting ? "Submitting..." : "Buy Package"}
             </Button>
           </div>
         </form>
@@ -175,6 +230,17 @@ const CreatePackageForm = ({ currentOrder }: { currentOrder: Order }) => {
             }}
             className="h-auto w-full max-w-full rounded-lg object-cover object-center md:h-[480px]"
           />
+        </section>
+      )}
+      {chargeData && (
+        <section style={{ display: "flex", flexDirection: "column"}}>
+        <div style={{ height: "150px" }}></div>
+        <div className="flex flex-col mt-5">
+          <h3>Shipment Charges</h3>
+          <pre>{JSON.stringify(chargeData, null, 2)}</pre>
+          <h3>Negotiated Rate Charges</h3>
+          <pre>{JSON.stringify(negotiatdChargeData, null, 2)}</pre>
+          </div>
         </section>
       )}
       {/* {rateData &&

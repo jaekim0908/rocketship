@@ -243,14 +243,14 @@ export const createUPSShipment = async (
                 },
               },
               Service: {
-                Code: "03",
+                Code: values.serviceCode,
                 Description: "Ground",
               },
               Package: {
                 Description: " ",
                 Packaging: {
                   Code: "02",
-                  Description: "Nails",
+                  Description: "",
                 },
                 Dimensions: {
                   UnitOfMeasurement: {
